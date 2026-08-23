@@ -1,0 +1,17 @@
+import { Container } from "@/components/ui/container";
+
+/**
+ * Route-safe placeholder only — prevents a broken footer link during
+ * Phase 7 QA. Real terms content requires legal input not yet
+ * available and is not written here.
+ */
+export default function TermsPage() {
+  return (
+    <section className="bg-background py-(--spacing-section-y)">
+      <Container width="content">
+        <p className="eyebrow text-foreground-muted">Terms</p>
+        <h1 className="mt-(--spacing-content) font-display text-h1 text-foreground">Coming soon</h1>
+      </Container>
+    </section>
+  );
+}

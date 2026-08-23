@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Manrope } from "next/font/google";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -15,8 +17,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Clouvent",
-  description: "Clouvent application shell.",
+  title: "Clouvent — Digital Presence Studio",
+  description:
+    "Clouvent designs, builds, and manages digital presences for photographers and visual/creative businesses.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -25,7 +28,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${instrumentSerif.variable} ${manrope.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Header />
+        <main className="flex flex-1 flex-col">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

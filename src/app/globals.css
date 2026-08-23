@@ -33,8 +33,12 @@
   --color-surface-dark-elevated: var(--graphite);
 
   --color-foreground: var(--clouvent-black);
-  --color-foreground-muted: var(--stone-grey);
+  /* Pure Stone Grey on Cloud Ivory measures ~2.2:1 — fails WCAG AA (4.5:1).
+     Blended with Clouvent Black for a muted tone that still passes
+     (~5.2:1), derived from approved tokens rather than a new primitive. */
+  --color-foreground-muted: color-mix(in srgb, var(--stone-grey) 55%, var(--clouvent-black) 45%);
   --color-foreground-inverse: var(--studio-white);
+  /* Stone Grey on Clouvent Black measures ~7.2:1 — passes as-is. */
   --color-foreground-inverse-muted: var(--stone-grey);
 
   --color-accent: var(--clouvent-copper);

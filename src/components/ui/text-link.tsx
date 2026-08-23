@@ -13,9 +13,13 @@ interface TextLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
  */
 export function TextLink({ href, children, className = "", ...props }: TextLinkProps) {
   return (
+    // Copper text/underline on Cloud Ivory measures ~2.9:1 — fails WCAG
+    // non-text contrast (3:1) at normal link size, so hover emphasis comes
+    // from underline weight, not colour, keeping text at a compliant
+    // foreground colour throughout.
     <Link
       href={href}
-      className={`underline decoration-border-subtle underline-offset-4 transition-colors duration-(--duration-fast) ease-(--ease-standard) hover:decoration-accent hover:text-accent ${className}`}
+      className={`underline decoration-border-subtle decoration-1 underline-offset-4 transition-[text-decoration-color,text-decoration-thickness] duration-(--duration-fast) ease-(--ease-standard) hover:decoration-foreground hover:decoration-2 ${className}`}
       {...props}
     >
       {children}

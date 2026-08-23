@@ -9,8 +9,12 @@ const base =
   "disabled:opacity-40 disabled:pointer-events-none";
 
 const variantClass: Record<ButtonVariant, string> = {
+  // Copper background with white text measures ~3.2:1 — fails WCAG AA
+  // for normal-size text (needs 4.5:1). Black text on copper measures
+  // ~5.4:1 and reads as an equally confident, "strong contrast" CTA
+  // per BRAND_SYSTEM.md §8 — just accessible rather than white-on-copper.
   primary:
-    "rounded-(--radius-control) bg-accent text-foreground-inverse px-6 py-3 hover:bg-accent-hover",
+    "rounded-(--radius-control) bg-accent text-foreground px-6 py-3 hover:bg-accent-hover",
   secondary:
     "rounded-(--radius-control) border border-border-subtle px-6 py-3 hover:bg-background-subtle",
   text: "underline-offset-4 hover:underline",

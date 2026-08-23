@@ -1,26 +1,170 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   PRIMITIVE TOKENS — exact approved values from BRAND_SYSTEM.md §3.
+   Do not add colours here without updating BRAND_SYSTEM.md first.
+   ========================================================================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --clouvent-black: #171717;
+  --graphite: #222120;
+  --cloud-ivory: #f3f0eb;
+  --studio-white: #faf9f7;
+  --clouvent-copper: #c9784e;
+  --soft-copper: #d99068;
+  --stone-grey: #a7a39e;
+  --border-grey: #353331;
 }
 
+/* =========================================================================
+   SEMANTIC TOKENS — functional roles, mapped from primitives only.
+   BRAND_SYSTEM.md's "surface rhythm" (near-black editorial sections
+   alternating with warm ivory/light sections) is a deliberate per-section
+   choice, not an OS dark-mode preference — dark surface tokens exist for a
+   <Section variant="dark"> to opt into, not for a global prefers-color-scheme
+   switch. See Foundation Audit / design direction synthesis in the phase
+   report for why this deliberately does not follow the Next.js scaffold
+   default of theming off prefers-color-scheme.
+   ========================================================================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--cloud-ivory);
+  --color-background-subtle: var(--studio-white);
+
+  --color-surface-dark: var(--clouvent-black);
+  --color-surface-dark-elevated: var(--graphite);
+
+  --color-foreground: var(--clouvent-black);
+  --color-foreground-muted: var(--stone-grey);
+  --color-foreground-inverse: var(--studio-white);
+  --color-foreground-inverse-muted: var(--stone-grey);
+
+  --color-accent: var(--clouvent-copper);
+  --color-accent-hover: var(--soft-copper);
+
+  /* Border Grey is near-black by design (a dark-surface divider per
+     BRAND_SYSTEM.md) — light-surface borders derive Stone Grey at reduced
+     opacity rather than inventing a new primitive. */
+  --color-border: var(--border-grey);
+  --color-border-subtle: color-mix(in srgb, var(--stone-grey) 35%, transparent);
+
+  --color-focus: var(--clouvent-copper);
+
+  /* -----------------------------------------------------------------------
+     Typography — font roles bound in layout.tsx via next/font/google
+     variables. Instrument Serif (400 only) for display/editorial;
+     Manrope (variable 200–800) for everything functional.
+     ----------------------------------------------------------------------- */
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  /* -----------------------------------------------------------------------
+     Type scale — fluid via clamp() between a 375px and 1440px viewport,
+     translating the ranges in BRAND_SYSTEM.md §4 rather than picking
+     arbitrary fixed values.
+     ----------------------------------------------------------------------- */
+  --text-display: clamp(3.5rem, 2.97rem + 2.25vw, 5rem);
+  --text-display--line-height: 1.05;
+
+  --text-h1: clamp(2.75rem, 2.31rem + 1.88vw, 4rem);
+  --text-h1--line-height: 1.1;
+
+  --text-h2: clamp(2rem, 1.65rem + 1.5vw, 3rem);
+  --text-h2--line-height: 1.15;
+
+  --text-h3: clamp(1.5rem, 1.32rem + 0.75vw, 2rem);
+  --text-h3--line-height: 1.25;
+
+  --text-body-lg: clamp(1.125rem, 1.04rem + 0.38vw, 1.375rem);
+  --text-body-lg--line-height: 1.6;
+
+  --text-body: clamp(1rem, 0.96rem + 0.19vw, 1.125rem);
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  --text-eyebrow: clamp(0.75rem, 0.71rem + 0.19vw, 0.875rem);
+  --text-eyebrow--line-height: 1.4;
+
+  /* -----------------------------------------------------------------------
+     Spacing — semantic section/content rhythm layered on Tailwind's
+     default numeric scale (used directly for micro/component spacing,
+     so it is not duplicated here).
+     ----------------------------------------------------------------------- */
+  --spacing-gutter: clamp(1.25rem, 1rem + 1vw, 3rem);
+  --spacing-content: clamp(1rem, 0.85rem + 0.75vw, 1.75rem);
+  --spacing-section-y: clamp(4rem, 3rem + 4vw, 8rem);
+
+  /* -----------------------------------------------------------------------
+     Layout widths.
+     ----------------------------------------------------------------------- */
+  --width-content: 65ch;
+  --width-wide: 80rem;
+
+  /* -----------------------------------------------------------------------
+     Radius — minimal, restrained. Clouvent is not a rounded-card interface.
+     ----------------------------------------------------------------------- */
+  --radius-control: 0.25rem;
+
+  /* -----------------------------------------------------------------------
+     Motion — calm, precise, under emil-design-eng's <300ms guidance.
+     Only transform/opacity are animated anywhere in this foundation.
+     ----------------------------------------------------------------------- */
+  --duration-fast: 120ms;
+  --duration-standard: 200ms;
+  --duration-deliberate: 320ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================================================================
+   UTILITIES — restrained, text-only styling that doesn't warrant a React
+   component (Foundation Primitive Review: Eyebrow, Divider).
+   ========================================================================= */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
+@utility divider {
+  border: none;
+  border-top: 1px solid var(--color-border-subtle);
+  margin: 0;
+}
+
+@utility divider-dark {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0;
+}
+
+/* =========================================================================
+   BASE
+   ========================================================================= */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Visible, purposeful focus ring — never removed without an accessible
+   replacement (CLAUDE.md → Accessibility). */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* prefers-reduced-motion is non-negotiable (CLAUDE.md → Brand & Design →
+   Motion; BRAND_SYSTEM.md §8). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

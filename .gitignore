@@ -5,8 +5,13 @@ node_modules/
 .next/
 out/
 dist/
+build/
 .vercel/
 .env
 .env.*
 !.env.example
 *.log
+coverage/
+*.pem
+*.tsbuildinfo
+next-env.d.ts

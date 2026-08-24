@@ -50,6 +50,15 @@
   --color-border: var(--border-grey);
   --color-border-subtle: color-mix(in srgb, var(--stone-grey) 35%, transparent);
 
+  /* Same Stone Grey primitive as border-subtle, at a higher mix (35% ->
+     45%, a reasoned ~1.3x step rather than a picked number) — scoped to
+     the Hero precision field only (Phase 7.5 prominence pass). Kept
+     separate from --color-border-subtle deliberately: that token is
+     shared by dividers, Container borders, and TextLink hover across
+     the whole site, and this adjustment is specifically for field
+     legibility at normal viewing distance, not a global tone change. */
+  --color-field-detail: color-mix(in srgb, var(--stone-grey) 45%, transparent);
+
   --color-focus: var(--clouvent-copper);
 
   /* -----------------------------------------------------------------------
@@ -142,6 +151,67 @@
   border: none;
   border-top: 1px solid var(--color-border);
   margin: 0;
+}
+
+/* One-time reveal for the Hero's precision field (Phase 7.5) — opacity
+   only, reuses the existing duration/easing tokens. Caught automatically
+   by the prefers-reduced-motion rule below (animation-duration: 0.01ms). */
+@utility field-reveal {
+  animation: field-reveal var(--duration-deliberate) var(--ease-standard) both;
+}
+
+@keyframes field-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================================================================
+   BEFORE/AFTER COMPARISON — thumb styling for the native <input
+   type="range"> used by BeforeAfterComparison (Phase 7.5). Plain CSS
+   rather than @utility: pseudo-element vendor selectors need reliable,
+   unambiguous syntax. Track stays transparent; the thumb is the only
+   visible part, styled as a small neutral handle from existing tokens.
+   ========================================================================= */
+.comparison-slider {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.comparison-slider::-webkit-slider-runnable-track {
+  background: transparent;
+}
+.comparison-slider::-moz-range-track {
+  background: transparent;
+}
+.comparison-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-control);
+  background: var(--color-background-subtle);
+  border: 1px solid var(--color-border-subtle);
+  cursor: ew-resize;
+}
+.comparison-slider::-moz-range-thumb {
+  width: 0.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-control);
+  background: var(--color-background-subtle);
+  border: 1px solid var(--color-border-subtle);
+  cursor: ew-resize;
+  box-sizing: border-box;
+}
+.comparison-slider:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.comparison-slider:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 /* =========================================================================

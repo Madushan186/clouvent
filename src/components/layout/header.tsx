@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/ui/logo";
 
 const links = [
   { href: "/work", label: "Work" },
@@ -66,7 +66,7 @@ export function Header() {
     >
       <div className="mx-auto flex w-full max-w-(--width-wide) items-center justify-between px-(--spacing-gutter) py-4">
         <Link href="/" className="flex items-center" aria-label="Clouvent home">
-          <Image src="/logo.png" alt="Clouvent" width={160} height={40} priority className="h-8 w-auto" />
+          <Logo priority />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
@@ -107,7 +107,7 @@ export function Header() {
         >
           <div className="flex items-center justify-between px-(--spacing-gutter) py-4">
             <Link href="/" className="flex items-center" aria-label="Clouvent home" onClick={() => setMenuOpen(false)}>
-              <Image src="/logo.png" alt="Clouvent" width={160} height={40} className="h-8 w-auto" />
+              <Logo />
             </Link>
             <button
               ref={closeButtonRef}

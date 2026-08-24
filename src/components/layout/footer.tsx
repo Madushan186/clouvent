@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { Logo } from "@/components/ui/logo";
 
 const navLinks = [
   { href: "/work", label: "Work" },
@@ -29,8 +29,13 @@ const legalLinks = [
 export function Footer() {
   return (
     <footer className="bg-background-subtle text-foreground">
-      <div className="mx-auto flex w-full max-w-(--width-wide) flex-col gap-(--spacing-content) px-(--spacing-gutter) py-(--spacing-content) md:flex-row md:items-center md:justify-between">
-        <Image src="/logo.png" alt="Clouvent" width={160} height={40} className="h-6 w-auto opacity-90" />
+      {/* items-start at the base (mobile, flex-col) state: without it,
+          flexbox's default align-items: stretch expands every child —
+          including the Logo — to the container's full cross-axis width.
+          Combined with the Logo's fixed aspect-ratio, that stretch was
+          what made the mobile footer logo render oversized. */}
+      <div className="mx-auto flex w-full max-w-(--width-wide) flex-col items-start gap-(--spacing-content) px-(--spacing-gutter) py-(--spacing-content) md:flex-row md:items-center md:justify-between">
+        <Logo variant="footer" className="opacity-90" />
 
         <nav className="flex flex-wrap gap-6" aria-label="Footer">
           {navLinks.map((link) => (

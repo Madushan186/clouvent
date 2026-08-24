@@ -169,6 +169,27 @@
   }
 }
 
+/* One-time nudge for the "Reveal before" discovery button's arrow
+   (Phase 7.5) — a single rightward nudge-and-return, played twice with
+   a natural pause between (the keyframe rests at 0 for most of each
+   iteration), then stops. Caught automatically by the
+   prefers-reduced-motion rule below (animation-duration: 0.01ms) — the
+   button still renders normally, just without the nudge. */
+@utility discovery-nudge {
+  animation: discovery-nudge 2.2s var(--ease-standard) 1.2s 2 both;
+}
+
+@keyframes discovery-nudge {
+  0%,
+  30%,
+  100% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(4px);
+  }
+}
+
 /* =========================================================================
    BEFORE/AFTER COMPARISON — thumb styling for the native <input
    type="range"> used by BeforeAfterComparison (Phase 7.5). Plain CSS
@@ -212,6 +233,16 @@
 .comparison-slider:focus-visible::-moz-range-thumb {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
+}
+/* At value=0 (untouched default) there's no split to show a handle
+   for — hides the thumb visually only; the input stays fully
+   interactive underneath, so dragging from the very edge still works
+   without a floating control apparently hanging off the image. */
+.comparison-slider--edge::-webkit-slider-thumb {
+  opacity: 0;
+}
+.comparison-slider--edge::-moz-range-thumb {
+  opacity: 0;
 }
 
 /* =========================================================================

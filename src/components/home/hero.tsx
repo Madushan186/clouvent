@@ -1,14 +1,12 @@
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { MediaPlaceholder } from "./media-placeholder";
+import { HeroFilm } from "./hero-film";
 
 /**
  * Structured Digital Editorial hero — HOMEPAGE_DESIGN_SPEC.md §6.
- * Unequal split, not a centered SaaS hero. The eyebrow + persistent
- * header logo (see Header) exist specifically so a visitor can never
- * mistake this for the photographer's own site — the photography zone
- * is explicitly labeled as a project preview, not presented as the
- * page's subject.
+ * Unequal split, not a centered SaaS hero. Right side is now a
+ * cinematic Clouvent brand film (atmosphere), not a project preview —
+ * that concept lives in Selected Work below, reached via "See the work".
  */
 export function Hero() {
   return (
@@ -48,7 +46,7 @@ export function Hero() {
               <Button href="/contact" variant="primary">
                 Start a project
               </Button>
-              <Button variant="text" className="!p-0">
+              <Button href="#selected-work" variant="text" className="!p-0">
                 See the work
               </Button>
             </div>
@@ -62,7 +60,9 @@ export function Hero() {
               className="absolute -top-(--spacing-content) left-0 hidden h-1.5 w-1.5 rounded-full bg-accent md:block"
             />
             <div className="border-t border-border-subtle pt-(--spacing-content) md:border-t-0 md:border-l md:pt-0 md:pl-(--spacing-gutter)">
-              <MediaPlaceholder label="Selected project preview — Once Upon a Time Photography" className="aspect-[4/5] w-full" />
+              <div className="aspect-[5/4] w-full">
+                <HeroFilm />
+              </div>
               {/* Precision Field, Rule 2: extends the existing seam rule a
                   short distance past the media frame — the field's most
                   essential pair, since it's directly tied to what was

@@ -1,6 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { SelectedWork } from "@/components/home/selected-work";
-import { Trust } from "@/components/home/trust";
+import { WhyClouvent } from "@/components/home/why-clouvent";
 import { ServicesOverview } from "@/components/home/services-overview";
 import { EnquiryCTA } from "@/components/home/enquiry-cta";
 
@@ -9,8 +9,8 @@ export default function Home() {
     <>
       <Hero />
       <SelectedWork />
-      <Trust />
       <ServicesOverview />
+      <WhyClouvent />
       <EnquiryCTA />
     </>
   );

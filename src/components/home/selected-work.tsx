@@ -20,11 +20,15 @@ import { BeforeAfterComparison } from "@/components/ui/before-after-comparison";
  */
 export function SelectedWork() {
   return (
-    <section className="bg-background-subtle py-(--spacing-section-y)">
+    <section id="selected-work" className="bg-background-subtle py-(--spacing-section-y)">
       <Container>
         <p className="eyebrow text-foreground-muted">Selected Work</p>
 
         <div className="mt-(--spacing-content) grid grid-cols-1 gap-(--spacing-content) md:grid-cols-5 md:gap-(--spacing-gutter)">
+          {/* No initialPosition passed — the component's own default (0)
+              applies, so this reads as a normal finished portfolio image
+              on first load, not a mid-comparison state. The "Reveal
+              before" button is the discovery path in. */}
           <BeforeAfterComparison
             beforeSrc="/projects/once-upon-a-time/before-wordpress.png"
             beforeAlt="Once Upon a Time Photography's previous WordPress website"

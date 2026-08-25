@@ -1,5 +1,7 @@
 # Clouvent Homepage Design Specification
 
+**Superseded 2026-08-26.** The five-section structure below (§5, §13) was approved Phase 6 output and shipped in Phase 7. It was deliberately expanded to eight sections — adding a Positioning Statement, an Australia/Global market-positioning section with a world map, and a Pricing Preview — per explicit direction to rebuild the homepage to a larger brief, confirmed with the user given the conflict with this document's "keep the homepage disciplined" guidance. `src/app/page.tsx`'s header comment is the current source of truth for section order and surface rhythm. This document is kept for historical context on the original five-section reasoning (Trust's two-mechanism rule, the ascending-vector budget, etc.), most of which the new sections still honour.
+
 Approved Phase 6 output. This is the implementation reference for Phase 7 — it does not override `CLAUDE.md`, `PROJECT_BRIEF.md`, or `BRAND_SYSTEM.md`, it applies them to one page. Where this document and another disagree, the other wins and the conflict should be reported, not silently resolved.
 
 ## 1. Purpose

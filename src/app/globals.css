@@ -248,6 +248,15 @@
 /* =========================================================================
    BASE
    ========================================================================= */
+
+/* Smooth scroll — gated to no-preference per brand motion guidelines.
+   anchor links (#selected-work) and in-page nav all benefit from this. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);

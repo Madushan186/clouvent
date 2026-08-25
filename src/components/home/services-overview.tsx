@@ -1,101 +1,215 @@
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
 import { Container } from "@/components/ui/container";
+import Link from "next/link";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 /**
- * "Our Capabilities" — vertical editorial index, not cards. Hover uses
- * Tailwind `group`/`group-hover` (pure CSS), so this stays a Server
- * Component. Grow's ascending-vector motif is the homepage's one
- * approved use (HOMEPAGE_DESIGN_SPEC.md §16) — kept, not duplicated.
+ * Services Overview — Cloud Ivory (#F3F0EB) surface.
+ * HOMEPAGE_DESIGN_SPEC.md §9 compliance:
+ *
+ * Purpose: Translate belief (built by Trust) into a concrete engagement structure.
+ * Visitor question: "What exactly would I be buying?"
+ *
+ * Layout: Horizontal sequence on desktop, vertical on mobile.
+ * Continuity shown via a connecting fine rule running across the three services.
+ * NOT three isolated cards.
+ *
+ * Content: One continuous editorial numbered sequence.
+ * BUILD → MANAGE → GROW. Homepage depth only — full detail at /services.
+ *
+ * Typography: Large editorial numerals (Instrument Serif). Manrope labels/descriptions.
+ *
+ * Graphic elements:
+ * - Editorial numbering is the primary graphic device (spec §9).
+ * - The ascending-vector motif: one deliberate use per page, spent here
+ *   on GROW (spec §16 — "most naturally accents GROW"). Implemented as a
+ *   small copper SVG arrow pointing up-right, visible desktop only.
+ * - No "Our Capabilities" eyebrow. The editorial numbers carry the section
+ *   identity. Eyebrow budget is at ceiling (Hero + removed here). PASS.
+ *
+ * Motion: "Minimal fade-in per item on scroll." (spec §17). No stagger drama.
+ * Mobile: Vertical stack. Connecting rule becomes a vertical line.
+ *
+ * CTA: Optional quiet text link "See how we work" → /services. Not a hard CTA.
+ * The hard ask comes in Enquiry.
  */
-const capabilities = [
+
+const services = [
   {
-    number: "01",
+    num: "01",
     name: "Build",
-    title: "Digital experiences, engineered properly.",
-    services: ["Web Design", "Web Development", "Responsive Experiences", "Performance Engineering"],
+    role: "Design + development",
     description:
-      "Distinctive websites built around your brand, your audience and the way your business actually works.",
+      "Distinctive websites built around your brand and the way your business actually works — not templates.",
+    items: [
+      "Web Design",
+      "Web Development",
+      "Responsive Architecture",
+      "Performance Engineering",
+    ],
+    vector: false,
   },
   {
-    number: "02",
+    num: "02",
     name: "Manage",
-    title: "The infrastructure behind the experience.",
-    services: ["Cloud Hosting", "Website Maintenance", "Security & Updates", "Analytics Infrastructure"],
-    description: "Reliable ongoing management that keeps your digital presence secure, current and performing.",
+    role: "Maintenance + infrastructure",
+    description:
+      "Reliable ongoing management that keeps your digital presence secure, current and performing after launch day.",
+    items: [
+      "Website Maintenance",
+      "Content Updates",
+      "Analytics Monitoring",
+      "Search Console",
+    ],
+    vector: false,
   },
   {
-    number: "03",
+    num: "03",
     name: "Grow",
-    title: "Turn presence into progress.",
-    services: ["SEO", "Search Console", "Analytics", "Digital Campaign Support"],
+    role: "Visibility + optimisation",
     description:
-      "Measurement, search visibility and ongoing optimisation designed to help your digital presence create measurable value.",
+      "Measurement and search visibility designed to help your digital presence create real business value.",
+    items: [
+      "SEO",
+      "Paid Social",
+      "Conversion Optimisation",
+      "Content Strategy",
+    ],
+    vector: true, // ascending-vector graphic — single deliberate use per spec §16
   },
 ];
 
 export function ServicesOverview() {
+  const reduce = useReducedMotion();
+
   return (
     <section className="bg-background py-(--spacing-section-y)">
       <Container>
-        <p className="eyebrow text-foreground-muted">Our Capabilities</p>
-        <h2 className="mt-(--spacing-content) max-w-(--width-content) font-display text-display text-foreground">
-          We build digital systems that keep working.
-        </h2>
-        <p className="mt-(--spacing-content) max-w-(--width-content) text-body-lg text-foreground-muted">
-          From the first line of code to ongoing growth, Clouvent creates and manages digital experiences built
-          for performance, clarity and long-term value.
-        </p>
 
-        <div className="mt-(--spacing-content)">
-          {capabilities.map((capability, index) => (
-            <div
-              key={capability.number}
-              className={`group relative py-(--spacing-section-y) ${index > 0 ? "border-t border-border-subtle" : ""}`}
+        {/* Section header — Instrument Serif, left-aligned, no eyebrow (budget exhausted) */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-(--spacing-content) border-b border-border-subtle pb-(--spacing-content)"
+        >
+          <h2 className="font-display text-h2 text-foreground leading-[1.15] max-w-[24ch]">
+            One studio. Three disciplines. One ongoing relationship.
+          </h2>
+          <Link
+            href="/services"
+            className="group inline-flex items-center gap-1.5 font-sans text-small font-semibold uppercase tracking-[0.08em] text-foreground-muted hover:text-foreground transition-colors duration-(--duration-fast) shrink-0 self-end md:self-auto"
+          >
+            Full services
+            <svg
+              aria-hidden="true"
+              width="12" height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="transition-transform duration-(--duration-fast) group-hover:translate-x-0.5"
             >
-              <div className="grid grid-cols-1 gap-(--spacing-content) md:grid-cols-12 md:gap-(--spacing-gutter)">
-                <div className="flex items-center gap-(--spacing-content) md:col-span-3 md:block">
-                  <span className="font-display text-display text-foreground-muted transition-colors duration-(--duration-standard) ease-(--ease-standard) group-hover:text-foreground">
-                    {capability.number}
-                  </span>
-                  <span
+              <path d="M1 6h10M7.5 2.5l3.5 3.5-3.5 3.5" />
+            </svg>
+          </Link>
+        </motion.div>
+
+        {/*
+         * The three services.
+         *
+         * Desktop: CSS grid 3 columns, services sit side by side.
+         * A fine horizontal rule runs across all three from the section header
+         * above, communicating continuity across BUILD → MANAGE → GROW.
+         *
+         * Mobile: single column, stacked vertically.
+         * Per spec §9: "Vertical stack, connecting rule becomes vertical."
+         * The left border on each item creates the vertical rule on mobile.
+         */}
+        <div className="mt-(--spacing-section-y) grid grid-cols-1 md:grid-cols-3 gap-0 divide-y divide-border-subtle md:divide-y-0 md:divide-x md:divide-border-subtle">
+          {services.map((s, i) => (
+            <motion.div
+              key={s.num}
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: reduce ? 0 : i * 0.09, ease: EASE }}
+              className="group relative flex flex-col gap-5 pt-(--spacing-content) pb-(--spacing-content) md:px-(--spacing-gutter) first:md:pl-0 last:md:pr-0"
+            >
+              {/* Number — editorial, Instrument Serif, muted by default */}
+              <div className="flex items-start justify-between">
+                <span className="font-display text-[3.5rem] leading-none text-foreground/20 select-none transition-colors duration-(--duration-standard) group-hover:text-foreground/40">
+                  {s.num}
+                </span>
+
+                {/*
+                 * Ascending vector — one deliberate use per page (spec §16).
+                 * Only on GROW (s.vector === true).
+                 * A copper SVG arrow pointing up-right — controlled, precise.
+                 * Reduced-motion: visible but not animated.
+                 */}
+                {s.vector && (
+                  <svg
                     aria-hidden="true"
-                    className="h-px w-6 bg-accent transition-[width] duration-(--duration-standard) ease-(--ease-standard) group-hover:w-12 md:mt-(--spacing-content) md:block"
-                  />
-                </div>
-
-                <div className="md:col-span-9">
-                  <h3 className="font-display text-h2 text-foreground transition-transform duration-(--duration-standard) ease-(--ease-standard) group-hover:translate-x-1">
-                    {capability.name}
-                  </h3>
-                  <p className="mt-(--spacing-content) font-display text-h3 text-foreground-muted">
-                    {capability.title}
-                    {capability.name === "Grow" && (
-                      <svg
-                        aria-hidden="true"
-                        viewBox="0 0 24 24"
-                        className="ml-2 inline-block h-5 w-5 text-foreground-muted"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                      >
-                        <path d="M5 19 19 5M19 5H10M19 5V14" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    )}
-                  </p>
-
-                  <ul className="mt-(--spacing-content) grid max-w-(--width-content) grid-cols-1 gap-x-(--spacing-content) gap-y-2 text-body text-foreground-muted sm:grid-cols-2">
-                    {capability.services.map((service) => (
-                      <li key={service}>{service}</li>
-                    ))}
-                  </ul>
-
-                  <p className="mt-(--spacing-content) max-w-(--width-content) text-body text-foreground-muted">
-                    {capability.description}
-                  </p>
-                </div>
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="var(--color-accent)"
+                    strokeWidth="1.25"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mt-1 opacity-60 group-hover:opacity-100 transition-opacity duration-(--duration-standard)"
+                  >
+                    <path d="M4 16 16 4M16 4H8M16 4v8" />
+                  </svg>
+                )}
               </div>
-            </div>
+
+              {/* Service name — Instrument Serif, display role */}
+              <div>
+                <h3 className="font-display text-h3 text-foreground leading-[1.2] transition-transform duration-(--duration-standard) ease-(--ease-standard) group-hover:translate-x-0.5">
+                  {s.name}
+                </h3>
+                {/* Role — Manrope, copper accent, small */}
+                <p className="mt-1 font-sans text-small font-semibold uppercase tracking-[0.08em] text-accent">
+                  {s.role}
+                </p>
+              </div>
+
+              {/* Description — homepage depth */}
+              <p className="font-sans text-body leading-[1.65] text-foreground-muted">
+                {s.description}
+              </p>
+
+              {/* Service items — fine copper markers */}
+              <ul className="flex flex-col gap-2" aria-label={`${s.name} services`}>
+                {s.items.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2.5 font-sans text-small text-foreground-muted"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="h-px w-3 bg-accent shrink-0"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           ))}
         </div>
+
+        {/* Bottom line — visual close of the section */}
+        <div className="mt-(--spacing-section-y) h-px w-full bg-border-subtle" />
+
       </Container>
     </section>
   );

@@ -147,7 +147,9 @@ function ServiceSelector({
               className={[
                 "group relative flex flex-1 flex-col gap-1.5 cursor-pointer",
                 "border rounded-(--radius-control) px-5 py-4",
-                "transition-[border-color,background-color] duration-(--duration-standard) ease-(--ease-standard)",
+                "transition-[border-color,background-color,transform] duration-(--duration-standard) ease-(--ease-standard)",
+                "active:scale-[0.98]",
+                "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent",
                 isChecked
                   ? "border-accent bg-accent/5"
                   : "border-border-subtle hover:border-foreground-muted/40",
@@ -573,22 +575,33 @@ export function ContactForm({
               aria-disabled={isPending}
               className="group inline-flex items-center justify-center gap-2 font-sans text-body font-medium rounded-(--radius-control) bg-accent text-foreground px-8 py-4 transition-colors duration-(--duration-standard) hover:bg-accent-hover active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent w-full sm:w-auto"
             >
-              {isPending ? "Sending…" : "Send project enquiry"}
-              {!isPending && (
-                <svg
-                  aria-hidden="true"
-                  width="14" height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="transition-transform duration-(--duration-fast) group-hover:translate-x-0.5"
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={isPending ? "pending" : "idle"}
+                  initial={reduce ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduce ? undefined : { opacity: 0 }}
+                  transition={{ duration: 0.15, ease: EASE }}
+                  className="inline-flex items-center gap-2"
                 >
-                  <path d="M1 7h12M8 3l4 4-4 4" />
-                </svg>
-              )}
+                  {isPending ? "Sending…" : "Send project enquiry"}
+                  {!isPending && (
+                    <svg
+                      aria-hidden="true"
+                      width="14" height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="transition-transform duration-(--duration-fast) group-hover:translate-x-0.5"
+                    >
+                      <path d="M1 7h12M8 3l4 4-4 4" />
+                    </svg>
+                  )}
+                </motion.span>
+              </AnimatePresence>
             </button>
 
             {/* Direct email alternative */}

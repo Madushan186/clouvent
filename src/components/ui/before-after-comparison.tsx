@@ -143,7 +143,7 @@ export function BeforeAfterComparison({
           type="button"
           onClick={handleReveal}
           aria-label="Reveal previous website for comparison"
-          className="eyebrow absolute bottom-4 left-4 z-10 flex items-center gap-1.5 rounded-full bg-surface-dark/60 px-3 py-1.5 text-foreground-inverse"
+          className="eyebrow absolute bottom-4 left-4 z-10 flex items-center gap-1.5 rounded-full bg-surface-dark/60 px-3 py-1.5 text-foreground-inverse transition-[background-color,transform] duration-(--duration-fast) ease-(--ease-standard) hover:bg-surface-dark/80 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           <span aria-hidden="true" className="discovery-nudge">
             ←

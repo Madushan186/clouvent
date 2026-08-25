@@ -106,7 +106,7 @@ export function WorldMarketMap() {
                   initial={reduce ? false : { opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, delay: reduce ? 0 : 0.7, ease: EASE }}
+                  transition={{ duration: 0.5, delay: reduce ? 0 : 0.4, ease: EASE }}
                 />
 
                 {/* Sparse node marking Australia — approved graphic motif */}
@@ -115,10 +115,10 @@ export function WorldMarketMap() {
                   cy={cy}
                   r={4}
                   fill="var(--color-background)"
-                  initial={reduce ? false : { opacity: 0, scale: 0 }}
+                  initial={reduce ? false : { opacity: 0, scale: 0.4 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.4, delay: reduce ? 0 : 1.1, ease: EASE }}
+                  transition={{ duration: 0.35, delay: reduce ? 0 : 0.6, ease: EASE }}
                   style={{ transformOrigin: `${cx}px ${cy}px` }}
                 />
 
@@ -156,7 +156,7 @@ export function WorldMarketMap() {
                 initial={reduce ? false : { opacity: 0, x: -8 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: reduce ? 0 : 1.2, ease: EASE }}
+                transition={{ duration: 0.4, delay: reduce ? 0 : 0.7, ease: EASE }}
                 className="absolute hidden md:block"
                 style={{ left: `${(labelX / 980) * 100}%`, top: `${(labelY / 500) * 100}%` }}
               >

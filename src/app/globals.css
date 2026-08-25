@@ -126,6 +126,14 @@
   --duration-standard: 200ms;
   --duration-deliberate: 320ms;
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Plain ease for hover/colour transitions — distinct from
+     --ease-standard, which several components still use for movement
+     (translate, clip-path, scale). Introduced as part of the
+     emil-design-eng audit's easing differentiation; --ease-standard's
+     existing usages are migrated separately, component by component,
+     not in this token-definition commit. */
+  --ease-hover: ease;
 }
 
 /* =========================================================================

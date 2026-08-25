@@ -121,7 +121,7 @@ export function Header() {
           ref={menuRef}
           type="button"
           onClick={() => setMenuOpen(true)}
-          className="font-sans text-small text-foreground md:hidden"
+          className="font-sans text-small text-foreground hover:text-accent transition-colors duration-(--duration-fast) md:hidden"
           aria-haspopup="true"
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
@@ -152,7 +152,7 @@ export function Header() {
                 ref={closeRef}
                 type="button"
                 onClick={() => setMenuOpen(false)}
-                className="font-sans text-small text-foreground"
+                className="font-sans text-small text-foreground hover:text-accent transition-colors duration-(--duration-fast)"
               >
                 Close
               </button>
@@ -182,7 +182,7 @@ export function Header() {
               <Link
                 href="/contact"
                 onClick={() => setMenuOpen(false)}
-                className="inline-flex items-center justify-center font-sans text-body font-medium rounded-(--radius-control) bg-accent text-foreground px-7 py-3.5 transition-colors duration-(--duration-standard) hover:bg-accent-hover"
+                className="inline-flex items-center justify-center font-sans text-body font-medium rounded-(--radius-control) bg-accent text-foreground px-7 py-3.5 transition-colors duration-(--duration-standard) hover:bg-accent-hover active:scale-[0.98]"
               >
                 Enquire
               </Link>

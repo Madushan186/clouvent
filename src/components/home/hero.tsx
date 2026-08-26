@@ -69,6 +69,30 @@ function fade(delay: number, reduce: boolean) {
   };
 }
 
+// Clip-path mask-wipe + slight rise, reserved for the headline only — the
+// one signature reveal in the sequence. Everything else keeps the plain
+// fade+translate in `up()` above; emil-design-eng's clip-path guidance
+// treats reveals like this as a first-class use of the property.
+function maskUp(delay: number, reduce: boolean) {
+  if (reduce) return {};
+  return {
+    initial: { clipPath: "inset(0% 0 100% 0)", opacity: 0, y: 12 },
+    animate: { clipPath: "inset(0% 0 0% 0)", opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease: EASE },
+  };
+}
+
+// One-time scale-settle on load — not a Ken Burns loop. Starts very
+// slightly zoomed and eases to rest, once, on mount only.
+function settle(delay: number, reduce: boolean) {
+  if (reduce) return {};
+  return {
+    initial: { scale: 1.045 },
+    animate: { scale: 1 },
+    transition: { duration: 1.3, delay, ease: EASE },
+  };
+}
+
 export function Hero() {
   const reduce = useReducedMotion() ?? false;
 
@@ -86,16 +110,20 @@ export function Hero() {
           ───────────────────────────────────────────────────── */}
       <motion.div
         {...fade(0.25, reduce)}
-        className="absolute top-0 right-0 bottom-0 left-[62%] hidden md:block"
+        className="absolute top-0 right-0 bottom-0 left-[62%] hidden md:block overflow-hidden"
       >
-        <Image
-          src="/studio-workspace.jpg"
-          alt="A photographer's studio — Clouvent serves photographers and visual businesses"
-          fill
-          priority
-          sizes="38vw"
-          className="object-cover object-center"
-        />
+        {/* Scale-settle layer — isolated from the caption strip below so
+            only the photograph zooms, not the caption text. */}
+        <motion.div {...settle(0.25, reduce)} className="absolute inset-0">
+          <Image
+            src="/studio-workspace.jpg"
+            alt="A photographer's studio — Clouvent serves photographers and visual businesses"
+            fill
+            priority
+            sizes="38vw"
+            className="object-cover object-center"
+          />
+        </motion.div>
 
         {/*
          * Caption strip — solid, not a gradient scrim.
@@ -160,7 +188,7 @@ export function Hero() {
              * max-w constrains to ~2 lines at all display sizes.
              */}
             <motion.h1
-              {...up(1, reduce)}
+              {...maskUp(0.1, reduce)}
               className="mt-8 font-display text-display leading-[0.98] tracking-tight text-foreground text-balance max-w-[13ch]"
             >
               Your work deserves a digital presence to match.
@@ -189,7 +217,13 @@ export function Hero() {
                 href="#selected-work"
                 className="group inline-flex items-center gap-1.5 font-sans text-body font-medium text-foreground-muted hover:text-foreground transition-colors duration-(--duration-fast) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent rounded-(--radius-control)"
               >
-                See the work
+                <span className="relative">
+                  See the work
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 -bottom-0.5 h-px bg-current origin-left scale-x-0 transition-transform duration-(--duration-standard) ease-(--ease-standard) group-hover:scale-x-100"
+                  />
+                </span>
                 <svg
                   aria-hidden="true"
                   width="13" height="13"
@@ -217,13 +251,15 @@ export function Hero() {
               {...fade(0.3, reduce)}
               className="mt-8 block md:hidden relative aspect-[3/2] w-full overflow-hidden rounded-(--radius-control)"
             >
-              <Image
-                src="/studio-workspace.jpg"
-                alt="A photographer's studio — Clouvent serves photographers and visual businesses"
-                fill
-                sizes="100vw"
-                className="object-cover object-center"
-              />
+              <motion.div {...settle(0.3, reduce)} className="absolute inset-0">
+                <Image
+                  src="/studio-workspace.jpg"
+                  alt="A photographer's studio — Clouvent serves photographers and visual businesses"
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-center"
+                />
+              </motion.div>
             </motion.div>
 
           </div>

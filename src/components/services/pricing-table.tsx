@@ -317,7 +317,7 @@ export function PricingTable() {
             href="/contact?service=general"
             className="group inline-flex items-center justify-center gap-2 font-sans text-body font-medium rounded-(--radius-control) bg-accent text-foreground px-7 py-3.5 transition-colors duration-(--duration-standard) ease-(--ease-standard) hover:bg-accent-hover active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent w-full sm:w-auto"
           >
-            Discuss Your Project
+            Start a project
             <svg
               aria-hidden="true"
               width="14" height="14"

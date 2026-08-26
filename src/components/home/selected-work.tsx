@@ -86,11 +86,9 @@ export function SelectedWork() {
               ))}
             </motion.ul>
 
-            {/* External link with arrow */}
-            <a
-              href="https://www.onceuponatimesphotography.com.au/"
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Internal link to the full case study, now that /work exists */}
+            <Link
+              href="/work"
               className="mt-(--spacing-content) inline-flex items-center gap-1.5 font-sans text-body text-foreground underline decoration-border-subtle decoration-1 underline-offset-4 transition-[text-decoration-color,text-decoration-thickness] duration-(--duration-fast) hover:decoration-foreground hover:decoration-2 group"
             >
               View the work
@@ -107,7 +105,7 @@ export function SelectedWork() {
               >
                 <path d="M1.5 11.5 11.5 1.5M11.5 1.5H5.5M11.5 1.5V7.5"/>
               </svg>
-            </a>
+            </Link>
           </motion.div>
         </div>
       </Container>

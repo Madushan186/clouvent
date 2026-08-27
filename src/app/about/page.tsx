@@ -1,16 +1,43 @@
-import { Container } from "@/components/ui/container";
+import type { Metadata } from "next";
+import { AboutHero } from "@/components/about/about-hero";
+import { WhyClouvent } from "@/components/about/why-clouvent";
+import { VisionMission } from "@/components/about/vision-mission";
+import { OurBelief } from "@/components/about/our-belief";
+import { AboutBuildManageGrow } from "@/components/about/about-build-manage-grow";
+import { AboutMap } from "@/components/about/about-map";
+import { OurStandard } from "@/components/about/our-standard";
+import { AboutBrandStatement, AboutEnquiryCTA } from "@/components/about/about-closing";
 
 /**
- * Route-safe placeholder only — prevents a broken nav link during
- * Phase 7 QA. Not a designed page; scoped for a future phase.
+ * About — one continuous editorial story, not isolated cards:
+ * Hero -> Why Clouvent Exists -> Vision + Mission -> Our Belief ->
+ * Build/Manage/Grow (philosophy) -> Australia/Global -> Our Standard ->
+ * Brand Statement -> Enquiry CTA.
+ *
+ * Surface rhythm: ivory, white, ivory, white, ivory, black (map),
+ * white, black, black (seam) — echoes the homepage's alternation
+ * discipline; the two dark moments (map, closing) are the only
+ * repeats, both deliberate.
  */
+
+export const metadata: Metadata = {
+  title: "About Clouvent | Premium Digital Presence Studio",
+  description:
+    "Meet Clouvent — an Australia-first premium digital presence studio building, managing and growing considered digital experiences for photographers, visual creatives and ambitious businesses.",
+};
+
 export default function AboutPage() {
   return (
-    <section className="bg-background py-(--spacing-section-y)">
-      <Container width="content">
-        <p className="eyebrow text-foreground-muted">About</p>
-        <h1 className="mt-(--spacing-content) font-display text-h1 text-foreground">Coming soon</h1>
-      </Container>
-    </section>
+    <>
+      <AboutHero />
+      <WhyClouvent />
+      <VisionMission />
+      <OurBelief />
+      <AboutBuildManageGrow />
+      <AboutMap />
+      <OurStandard />
+      <AboutBrandStatement />
+      <AboutEnquiryCTA />
+    </>
   );
 }

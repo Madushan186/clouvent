@@ -1,8 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { motion, useReducedMotion } from "motion/react";
 import { Logo } from "@/components/ui/logo";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 /**
  * Footer — Studio White (#FAF9F7) surface.
+ *
+ * One restrained scroll-reveal on the whole footer (not a per-column
+ * stagger — this is the page's administrative close, not a moment
+ * that warrants drama). Matches the "Subtle" scroll-reveal tier: small
+ * y-offset, ~350ms, once, reduced-motion safe. Previously the one
+ * section on every page with zero motion at all.
  * HOMEPAGE_DESIGN_SPEC.md §12 compliance:
  *
  * - Secondary-role logo/brandmark (quieter than header, spec §12)
@@ -35,8 +46,16 @@ const legal = [
 ];
 
 export function Footer() {
+  const reduce = useReducedMotion();
+
   return (
-    <footer className="bg-background-subtle border-t border-border-subtle">
+    <motion.footer
+      initial={reduce ? false : { opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: reduce ? 0 : 0.35, ease: EASE }}
+      className="bg-background-subtle border-t border-border-subtle"
+    >
 
       {/* Main footer body */}
       <div className="mx-auto w-full max-w-(--width-wide) px-(--spacing-gutter) py-(--spacing-section-y)">
@@ -144,6 +163,6 @@ export function Footer() {
         </div>
       </div>
 
-    </footer>
+    </motion.footer>
   );
 }

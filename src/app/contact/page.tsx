@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { ContactForm } from "./contact-form";
+import { ContactHero } from "./contact-hero";
 
 /**
  * Contact / Project Enquiry page.
@@ -48,28 +49,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   const defaultServices = VALID_SERVICE_PARAMS.has(rawService) ? [rawService] : [];
 
   return (
-    <main>
+    <>
 
-      {/* ── Page introduction ─────────────────────────────────────────────── */}
-      <section className="bg-background pt-(--spacing-section-y) pb-12">
-        <Container>
-          <div className="grid grid-cols-1 gap-(--spacing-content) md:grid-cols-2 md:gap-(--spacing-gutter) md:items-end">
-            <div>
-              <p className="eyebrow text-foreground-muted">Start a project</p>
-              <h1 className="mt-(--spacing-content) font-display text-display text-foreground leading-[1.05] tracking-tight text-balance max-w-[14ch]">
-                Let&apos;s build something worth remembering.
-              </h1>
-            </div>
-            <div className="md:pb-1">
-              <p className="font-sans text-body-lg text-foreground-muted leading-[1.6] max-w-[48ch]">
-                Whether you need a new digital presence, ongoing management, or a stronger
-                foundation for growth — tell us where you are and where you want to go.
-                We&apos;ll start with a conversation.
-              </p>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <ContactHero />
 
       {/* ── Two-column editorial: left context / right form ────────────────── */}
       <section className="bg-background pb-(--spacing-section-y)">
@@ -150,6 +132,6 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         </Container>
       </section>
 
-    </main>
+    </>
   );
 }

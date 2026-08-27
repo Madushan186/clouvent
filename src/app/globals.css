@@ -265,6 +265,22 @@
   }
 }
 
+/* Defensive safety net: several sections translateX() elements into
+   place before their scroll-reveal fires (e.g. Selected Work's
+   slide-in), which transiently extends scrollWidth a few pixels until
+   the element has been scrolled into view once. Real users never see
+   it in practice — scrolling down is exactly the action that resolves
+   it — but it's still a measurable horizontal-scroll surface. Set on
+   `html` (the root scrolling element already) rather than `body`,
+   since `overflow-x` on `body` implicitly gives `body` its own
+   `overflow-y: auto` per the CSS overflow spec when only one axis is
+   set — which would turn `body` into a second scroll container and
+   break Header's `position: sticky`.
+   */
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);

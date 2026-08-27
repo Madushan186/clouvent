@@ -23,10 +23,10 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   return (
-    <main className="flex flex-col">
+    <div className="flex flex-col">
 
       {/* ── Work Hero — static, no image, matches Services/Contact header pattern ── */}
-      <section className="bg-background py-(--spacing-section-y)">
+      <section id="hero" className="bg-background py-(--spacing-section-y)">
         <Container>
           <p className="eyebrow text-foreground-muted">Selected Work / 01</p>
           <h1 className="mt-(--spacing-content) font-display text-display text-foreground leading-[1.05] tracking-tight text-balance max-w-[16ch]">
@@ -46,6 +46,6 @@ export default function WorkPage() {
       <BrandStatement />
       <WorkFinalCTA />
 
-    </main>
+    </div>
   );
 }

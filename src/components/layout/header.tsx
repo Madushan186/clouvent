@@ -21,6 +21,16 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  * transitions to bg-background + border-b once hero exits viewport.
  * Uses IntersectionObserver on #hero — NO window.addEventListener('scroll').
  *
+ * IMPORTANT: `#hero` is a site-wide convention, not homepage-specific —
+ * every route's opening section must carry id="hero" (see
+ * home/hero.tsx, about/about-hero.tsx, services/services-hero.tsx,
+ * contact/contact-hero.tsx, work/page.tsx). Without it, `scrolled`
+ * never becomes true and the header stays permanently transparent on
+ * that page, letting content bleed through it on scroll — this exact
+ * bug shipped silently on four routes before being caught visually.
+ * A new page's opening section needs this id even if it isn't a
+ * literal "hero" in the marketing sense.
+ *
  * CTA: "Enquire" — ONE contact-intent label across all nav occurrences. PASS.
  * Mobile menu: full-screen overlay with Motion AnimatePresence slide.
  */

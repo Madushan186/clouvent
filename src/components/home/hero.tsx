@@ -50,8 +50,19 @@ import Link from "next/link";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 // Stagger helper — slide up + fade. Used for text elements in sequence.
+//
+// `animate` is always defined, even when reduce is true — only `initial`
+// is gated to `false`. This matters: if `animate` were omitted too (as an
+// earlier version of this helper did), a component could get stuck at its
+// SSR-rendered opacity:0 forever. SSR always renders as if reduce=false
+// (matchMedia isn't available server-side), so the server HTML bakes in
+// the animated starting style; on hydration, if the client's real
+// prefers-reduced-motion is "reduce", framer-motion needs an unconditional
+// `animate` target to drive the element to its correct final state —
+// `initial={false}` alone just means "don't play a transition from here,"
+// not "ignore whatever the DOM already has."
 function up(i: number, reduce: boolean) {
-  if (reduce) return {};
+  if (reduce) return { initial: false, animate: { opacity: 1, y: 0 } };
   return {
     initial: { opacity: 0, y: 28 },
     animate: { opacity: 1, y: 0 },
@@ -61,7 +72,7 @@ function up(i: number, reduce: boolean) {
 
 // Pure fade, no transform. Used for the image panel and strip.
 function fade(delay: number, reduce: boolean) {
-  if (reduce) return {};
+  if (reduce) return { initial: false, animate: { opacity: 1 } };
   return {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
@@ -74,7 +85,9 @@ function fade(delay: number, reduce: boolean) {
 // fade+translate in `up()` above; emil-design-eng's clip-path guidance
 // treats reveals like this as a first-class use of the property.
 function maskUp(delay: number, reduce: boolean) {
-  if (reduce) return {};
+  if (reduce) {
+    return { initial: false, animate: { clipPath: "inset(0% 0 0% 0)", opacity: 1, y: 0 } };
+  }
   return {
     initial: { clipPath: "inset(0% 0 100% 0)", opacity: 0, y: 12 },
     animate: { clipPath: "inset(0% 0 0% 0)", opacity: 1, y: 0 },
@@ -85,7 +98,7 @@ function maskUp(delay: number, reduce: boolean) {
 // One-time scale-settle on load — not a Ken Burns loop. Starts very
 // slightly zoomed and eases to rest, once, on mount only.
 function settle(delay: number, reduce: boolean) {
-  if (reduce) return {};
+  if (reduce) return { initial: false, animate: { scale: 1 } };
   return {
     initial: { scale: 1.045 },
     animate: { scale: 1 },
